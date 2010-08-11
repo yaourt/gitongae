@@ -8,18 +8,42 @@ import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ObjectReader;
 
-public class AppengineObjectReader extends ObjectReader {
+import com.googlecode.objectify.Objectify;
+import com.googlecode.objectify.ObjectifyService;
 
-	public ObjectReader newReader() {
-		// TODO Auto-generated method stub
-		return null;
+public class AppengineObjectReader extends ObjectReader {
+	static {
+		ObjectifyService.register(AppengineObject.class);
 	}
 
-	public ObjectLoader open(AnyObjectId objectId, int typeHint)
+	private AppengineObjectDatabase db;
+
+	AppengineObjectReader(final AppengineObjectDatabase db) {
+		this.db = db;
+	}
+
+	public ObjectReader newReader() {
+		return new AppengineObjectReader(db);
+	}
+
+	public ObjectLoader open(final AnyObjectId objectId, final int typeHint)
 			throws MissingObjectException, IncorrectObjectTypeException,
 			IOException {
-		// TODO Auto-generated method stub
-		return null;
+		Objectify ofy = ObjectifyService.begin();
+		AppengineObject obj = ofy.get(AppengineObject.class, objectId.name());
+
+		if (obj == null) {
+			if (typeHint == OBJ_ANY) {
+				throw new MissingObjectException(objectId.copy(), "unknown");
+			} else {
+				throw new MissingObjectException(objectId.copy(), typeHint);
+			}
+		}
+		if (typeHint != OBJ_ANY && obj.getTypeHint() != typeHint) {
+			throw new IncorrectObjectTypeException(objectId.copy(), typeHint);
+		}
+		AppengineObjectLoader ldr = new AppengineObjectLoader(obj);
+		return ldr;
 	}
 
 }

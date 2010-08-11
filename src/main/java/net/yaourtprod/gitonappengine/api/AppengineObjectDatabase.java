@@ -12,13 +12,11 @@ public class AppengineObjectDatabase extends ObjectDatabase {
 	}
 
 	public ObjectInserter newInserter() {
-		// TODO Auto-generated method stub
-		return null;
+		return new AppengineObjectInserter(this);
 	}
 
 	public ObjectReader newReader() {
-		// TODO Auto-generated method stub
-		return null;
+		return new AppengineObjectReader(this);
 	}
 
 	public void close() {

@@ -2,9 +2,7 @@ package net.yaourtprod.gitonappengine.api;
 
 import java.io.ByteArrayOutputStream;
 import java.io.EOFException;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -14,9 +12,7 @@ import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 
 import org.eclipse.jgit.errors.ObjectWritingException;
-import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.Constants;
-import org.eclipse.jgit.lib.CoreConfig;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectInserter;
 
@@ -89,8 +85,9 @@ public class AppengineObjectInserter extends ObjectInserter {
 			dOut.close();
 		}
 
-		tmp.setObjectId(ObjectId.fromRaw(md.digest()).name());
 		tmp.setRepoId(db.getRepoId());
+		tmp.setTypeHint(type);
+		tmp.setObjectId(ObjectId.fromRaw(md.digest()).name());
 		tmp.setRawContent(baos.toByteArray());
 		baos.close();
 		baos = null;

@@ -10,6 +10,7 @@ import com.googlecode.objectify.annotation.Unindexed;
 public class AppengineObject {
 	private @Id String objectId;
 	private @Indexed String repoId;
+	private @Indexed int typeHint;
 	private @Unindexed byte[] rawContent;
 	
 	public AppengineObject() {
@@ -39,4 +40,13 @@ public class AppengineObject {
 	public void setRawContent(byte[] rawContent) {
 		this.rawContent = rawContent;
 	}
+
+	public int getTypeHint() {
+		return typeHint;
+	}
+
+	public void setTypeHint(int typeHint) {
+		this.typeHint = typeHint;
+	}
+	
 }

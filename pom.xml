@@ -7,6 +7,10 @@
 	<name>GitOnGAE</name>
 	<description>Git on Google AppEngine</description>
 
+	<properties>
+		<gae.version>1.3.5</gae.version>
+	</properties>
+
 	<repositories>
 		<repository>
 			<id>maven-gae-plugin-repo</id>
@@ -40,29 +44,28 @@
 	</pluginRepositories>
 
 	<dependencies>
+		<!-- JGit -->
 		<dependency>
 			<groupId>org.eclipse.jgit</groupId>
 			<artifactId>org.eclipse.jgit</artifactId>
 			<version>0.9.0-SNAPSHOT</version>
 			<scope>compile</scope>
 		</dependency>
+		
+		<!-- Objectify -->
 		<dependency>
 			<groupId>com.googlecode.objectify</groupId>
 			<artifactId>objectify</artifactId>
 			<version>2.2.1</version>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.geronimo.specs</groupId>
-			<artifactId>geronimo-jpa_3.0_spec</artifactId>
-			<version>1.1.1</version>
-		</dependency>
+
+		<!-- Testing fwks -->
 		<dependency>
 			<groupId>org.testng</groupId>
 			<artifactId>testng</artifactId>
 			<version>5.13.1</version>
 			<scope>test</scope>
 		</dependency>
-
 		<dependency>
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-all</artifactId>
@@ -70,35 +73,55 @@
 			<type>jar</type>
 			<scope>test</scope>
 		</dependency>
+
+<!--		<dependency>-->
+<!--			<groupId>com.google.appengine.orm</groupId>-->
+<!--			<artifactId>datanucleus-appengine</artifactId>-->
+<!--			<version>1.0.7.final</version>-->
+<!--		</dependency>-->
+
+		<!--    GAE libraries needed at runtime -->
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-1.0-sdk</artifactId>
-			<version>1.3.5</version>
-			<scope>provided</scope>
+			<version>${gae.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-labs</artifactId>
-			<version>1.3.5</version>
-			<scope>provided</scope>
+			<version>${gae.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
-			<groupId>com.google.appengine.orm</groupId>
-			<artifactId>datanucleus-appengine</artifactId>
-			<version>1.0.5</version>
+			<groupId>org.apache.geronimo.specs</groupId>
+			<artifactId>geronimo-jpa_3.0_spec</artifactId>
+			<version>1.1.1</version>
 		</dependency>
-		<dependency>
-			<groupId>com.google.appengine</groupId>
-			<artifactId>appengine-testing</artifactId>
-			<version>1.3.5</version>
-			<scope>test</scope>
-		</dependency>
+		<!-- // GAE libraries needed at runtime -->
+
+		<!--    GAE libraries for local testing -->
 		<dependency>
 			<groupId>com.google.appengine</groupId>
 			<artifactId>appengine-api-stubs</artifactId>
-			<version>1.3.5</version>
+			<version>${gae.version}</version>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-local-runtime</artifactId>
+			<version>${gae.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.appengine</groupId>
+			<artifactId>appengine-testing</artifactId>
+			<version>${gae.version}</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- // GAE libraries for local testing -->
 	</dependencies>
 
 	<build>
